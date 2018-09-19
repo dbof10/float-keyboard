@@ -1,5 +1,3 @@
-# AndroidCustomKeyboard
+# Floating Keyboard
 
-Android custom keyboard with predictive text.
-
-![Animated Gif](keyboard.gif)
+Keyboard can float around screen
