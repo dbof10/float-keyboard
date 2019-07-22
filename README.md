@@ -1,3 +1,6 @@
 # Floating Keyboard
 
-Keyboard can float around screen
+A floating and draggable keyboard
+
+<img src="demo_small.gif" width="200"/>
+
