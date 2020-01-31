@@ -24,15 +24,12 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.inputmethod.InputMethodSubtype;
 
 import java.util.List;
 
 public class LatinKeyboardView extends KeyboardView {
 
     static final int KEYCODE_OPTIONS = -100;
-    // TODO: Move this into android.inputmethodservice.Keyboard
     static final int KEYCODE_LANGUAGE_SWITCH = -101;
 
     public LatinKeyboardView(Context context, AttributeSet attrs) {
@@ -48,18 +45,12 @@ public class LatinKeyboardView extends KeyboardView {
         if (key.codes[0] == Keyboard.KEYCODE_CANCEL) {
             getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null);
             return true;
-        /*} else if (key.codes[0] == 113) {
-
-            return true; */
         } else {
-            //Log.d("LatinKeyboardView", "KEY: " + key.codes[0]);
             return super.onLongPress(key);
         }
     }
 
-    void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
-        final LatinKeyboard keyboard = (LatinKeyboard)getKeyboard();
-        //keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
+    void setSubtypeOnSpaceKey() {
         invalidateAllKeys();
     }
 
@@ -73,8 +64,8 @@ public class LatinKeyboardView extends KeyboardView {
         paint.setColor(Color.LTGRAY);
 
         List<Key> keys = getKeyboard().getKeys();
-        for(Key key: keys) {
-            if(key.label != null) {
+        for (Key key : keys) {
+            if (key.label != null) {
                 if (key.label.equals("q")) {
                     canvas.drawText("1", key.x + (key.width - 25), key.y + 40, paint);
                 } else if (key.label.equals("w")) {
