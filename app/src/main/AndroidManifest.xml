@@ -5,15 +5,17 @@
 
     <application
         android:label="@string/ime_name"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ImePreferences"
-            android:label="@string/settings_name">
+            android:name=".MainActivity"
+            android:label="Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name="SoftKeyboard"
             android:permission="android.permission.BIND_INPUT_METHOD">

@@ -2,6 +2,7 @@ package com.blackcj.customkeyboard
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
@@ -15,9 +16,12 @@ class KeyboardDragDelegate(private val context: Context, private val window: Win
     private var initCenterY = 0
 
     private val centerYBound by lazy {
-        val screenHeight = context.displayMetrics.heightPixels
-        val windowHeight = window.attributes.height
-        return@lazy IntRange(0 + windowHeight + getStatusBarHeight(), screenHeight - windowHeight - getNavBarHeight())
+//        val screenHeight = context.displayMetrics.heightPixels
+//        val windowHeight = window.attributes.height
+//        return@lazy IntRange(0 + windowHeight + getStatusBarHeight(), screenHeight - windowHeight - getNavBarHeight())
+
+        val halfScreenHeight = context.displayMetrics.heightPixels / 2
+        return@lazy IntRange(-halfScreenHeight, halfScreenHeight)
     }
 
     private val centerXBound by lazy {
@@ -28,7 +32,7 @@ class KeyboardDragDelegate(private val context: Context, private val window: Win
     fun onTouch(view: View, event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                Log.d("MotionEvent", "ACTION_DOWN")
                 initialX = window.attributes.x
                 initialY = window.attributes.y
                 initialTouchX = event.rawX
@@ -49,8 +53,10 @@ class KeyboardDragDelegate(private val context: Context, private val window: Win
                     params.x = newCenterX
                     params.y = newCenterY - (window.attributes.height / 2)
                     updateViewLayout(params)
+                    Log.d("MotionEvent", "A ACTION_MOVE")
                     return true
                 }
+                Log.d("MotionEvent", "B ACTION_MOVE ${isWithinXBound(newCenterX)} ${isWithinYBound(newCenterY)}")
                 return false
             }
         }
