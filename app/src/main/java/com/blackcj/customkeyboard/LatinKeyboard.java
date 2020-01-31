@@ -22,7 +22,6 @@ import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 
 public class LatinKeyboard extends Keyboard {
 
@@ -33,11 +32,6 @@ public class LatinKeyboard extends Keyboard {
      * match the region of {@link #mModeChangeKey} when {@link #mModeChangeKey} becomes invisible.
      */
     private Key mModeChangeKey;
-    /**
-     * Stores the current state of the language switch key (a.k.a. globe key). This should be
-     * visible while {@link InputMethodManager#shouldOfferSwitchingToNextInputMethod(IBinder)}
-     * returns true. When this key becomes invisible, its width will be shrunk to zero.
-     */
     private Key mLanguageSwitchKey;
     /**
      * Stores the size and other information of {@link #mModeChangeKey} when
@@ -51,19 +45,19 @@ public class LatinKeyboard extends Keyboard {
      * {@link #mLanguageSwitchKey} is changed.
      */
     private Key mSavedLanguageSwitchKey;
-    
+
     public LatinKeyboard(Context context, int xmlLayoutResId) {
         super(context, xmlLayoutResId);
     }
 
-    public LatinKeyboard(Context context, int layoutTemplateResId, 
-            CharSequence characters, int columns, int horizontalPadding) {
+    public LatinKeyboard(Context context, int layoutTemplateResId,
+                         CharSequence characters, int columns, int horizontalPadding) {
         super(context, layoutTemplateResId, characters, columns, horizontalPadding);
     }
 
     @Override
-    protected Key createKeyFromXml(Resources res, Row parent, int x, int y, 
-            XmlResourceParser parser) {
+    protected Key createKeyFromXml(Resources res, Row parent, int x, int y,
+                                   XmlResourceParser parser) {
         Key key = new LatinKey(res, parent, x, y, parser);
         if (key.codes[0] == 10) {
             mEnterKey = key;
@@ -81,6 +75,7 @@ public class LatinKeyboard extends Keyboard {
 
     /**
      * Dynamically change the visibility of the language switch key (a.k.a. globe key).
+     *
      * @param visible True if the language switch key should be visible.
      */
     void setLanguageSwitchKeyVisibility(boolean visible) {
@@ -111,7 +106,7 @@ public class LatinKeyboard extends Keyboard {
             return;
         }
 
-        switch (options&(EditorInfo.IME_MASK_ACTION|EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
+        switch (options & (EditorInfo.IME_MASK_ACTION | EditorInfo.IME_FLAG_NO_ENTER_ACTION)) {
             case EditorInfo.IME_ACTION_GO:
                 mEnterKey.iconPreview = null;
                 mEnterKey.icon = null;
@@ -145,15 +140,15 @@ public class LatinKeyboard extends Keyboard {
     }
 
     static class LatinKey extends Keyboard.Key {
-        
+
         public LatinKey(Resources res, Keyboard.Row parent, int x, int y,
-                XmlResourceParser parser) {
+                        XmlResourceParser parser) {
             super(res, parent, x, y, parser);
         }
-        
+
         /**
          * Overriding this method so that we can reduce the target area for the key that
-         * closes the keyboard. 
+         * closes the keyboard.
          */
         @Override
         public boolean isInside(int x, int y) {

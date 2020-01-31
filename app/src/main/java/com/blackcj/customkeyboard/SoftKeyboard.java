@@ -25,7 +25,6 @@ import android.os.IBinder;
 import android.text.InputType;
 import android.text.method.MetaKeyKeyListener;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -38,8 +37,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import static android.inputmethodservice.InputMethodService.Insets.TOUCHABLE_INSETS_FRAME;
 
 /**
  Example of writing an input method for a soft keyboard.  This code is
@@ -291,12 +288,12 @@ public class SoftKeyboard extends InputMethodService
         setLatinKeyboard(mCurKeyboard);
         mInputView.closing();
         final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
-        mInputView.setSubtypeOnSpaceKey(subtype);
+        mInputView.setSubtypeOnSpaceKey();
     }
 
     @Override
     public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
-        mInputView.setSubtypeOnSpaceKey(subtype);
+        mInputView.setSubtypeOnSpaceKey();
     }
 
 
